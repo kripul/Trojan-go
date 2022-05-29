@@ -230,7 +230,7 @@ tls_generate() {
   if [[ -f "/data/${domain}/fullchain.crt" ]] && [[ -f "/data/${domain}/privkey.key" ]]; then
     echo -e "${Info}证书已存在……不需要再重新签发了……"
   else
-    if "$HOME"/.acme.sh/acme.sh --issue -d "${domain}" --standalone -k ec-256 --force --test; then
+    if "$HOME"/.acme.sh/acme.sh --issue -d "${domain}" --standalone -k ec-256 --force --test --register-account -m hai@kotak.email; then
         echo -e "${Info} TLS 证书测试签发成功，开始正式签发"
         rm -rf "$HOME/.acme.sh/${domain}_ecc"
         sleep 2
@@ -240,7 +240,7 @@ tls_generate() {
         exit 1
     fi
 
-    if "$HOME"/.acme.sh/acme.sh --issue -d "${domain}" --standalone -k ec-256 --force; then
+    if "$HOME"/.acme.sh/acme.sh --issue -d "${domain}" --standalone -k ec-256 --force --register-account -m hai@kotak.email; then
         echo -e "${Info} TLS 证书生成成功 "
         sleep 2
         mkdir /data
